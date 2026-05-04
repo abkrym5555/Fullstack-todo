@@ -55,3 +55,18 @@ exports.create = async (req, res) => {
     res.status(201).json(todo);
   } catch (e) { res.status(500).json({ error: e.message }); }
 };
+
+
+exports.update = async (req, res) => {
+  try {
+    const todo = await db.todos.findOne({ _id: req.params.id, userId: req.user.id });
+    if (!todo) return res.status(404).json({ error: 'Not found' });
+
+    const allowed = ['title', 'description', 'priority', 'status', 'dueDate', 'tags', 'collectionId'];
+    const updates = { updatedAt: new Date().toISOString() };
+    allowed.forEach(f => { if (req.body[f] !== undefined) updates[f] = req.body[f]; });
+
+    await db.todos.update({ _id: req.params.id }, { $set: updates });
+    res.json({ ...todo, ...updates });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+};
