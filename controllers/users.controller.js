@@ -52,5 +52,27 @@ exports.getProfile = async (req, res) => {
   res.json(safe);
 };
 
+exports.updateProfile = async (req, res) => {
+  try {
+    const { name, email, password, profilePicture } = req.body;
+    const updates = { updatedAt: new Date().toISOString() };
+    if (name) updates.name = name;
+    if (email) {
+      const existing = await db.users.findOne({ email });
+      if (existing && existing._id !== req.user.id) {
+        return res.status(409).json({ error: 'Email already in use' });
+      }
+      updates.email = email;
+    }
+    if (password) updates.password = await bcrypt.hash(password, SALT_ROUNDS);
+    if (profilePicture !== undefined) updates.profilePicture = profilePicture;
+    
+    await db.users.update({ _id: req.user.id }, { $set: updates });
+    res.json({ message: 'Profile updated' });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};
+
 
 
