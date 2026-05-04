@@ -45,4 +45,10 @@ exports.remove = async (req, res) => {
   res.json({ message: 'Deleted' });
 };
 
+exports.getTodos = async (req, res) => {
+  const col = await db.collections.findOne({ _id: req.params.id, userId: req.user.id });
+  if (!col) return res.status(404).json({ error: 'Not found' });
+  const todos = await db.todos.find({ collectionId: req.params.id, userId: req.user.id });
+  res.json({ collection: col, todos });
+};
 
