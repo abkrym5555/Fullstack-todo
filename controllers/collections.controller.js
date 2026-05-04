@@ -10,3 +10,45 @@ exports.getAll = async (req, res) => {
   }));
   res.json(enriched);
 };
+
+exports.create = async (req, res) => {
+  const { name, description, color = '#6366f1', icon = '📋' } = req.body;
+  if (!name) return res.status(400).json({ error: 'Name required' });
+  const col = await db.collections.insert({
+    _id: uuid(), userId: req.user.id,
+    name, description, color, icon,
+    createdAt: new Date().toISOString()
+  });
+  res.status(201).json(col);
+};
+
+
+
+exports.update = async (req, res) => {
+  const col = await db.collections.findOne({ _id: req.params.id, userId: req.user.id });
+  if (!col) return res.status(404).json({ error: 'Not found' });
+  const { name, description, color, icon } = req.body;
+  const updates = {};
+  if (name) updates.name = name;
+  if (description !== undefined) updates.description = description;
+  if (color) updates.color = color;
+  if (icon) updates.icon = icon;
+  await db.collections.update({ _id: req.params.id }, { $set: updates });
+  res.json({ ...col, ...updates });
+};
+
+
+exports.remove = async (req, res) => {
+  await db.collections.remove({ _id: req.params.id, userId: req.user.id });
+  // Unlink todos
+  await db.todos.update({ collectionId: req.params.id }, { $set: { collectionId: null } }, { multi: true });
+  res.json({ message: 'Deleted' });
+};
+
+exports.getTodos = async (req, res) => {
+  const col = await db.collections.findOne({ _id: req.params.id, userId: req.user.id });
+  if (!col) return res.status(404).json({ error: 'Not found' });
+  const todos = await db.todos.find({ collectionId: req.params.id, userId: req.user.id });
+  res.json({ collection: col, todos });
+};
+
