@@ -45,4 +45,12 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.getProfile = async (req, res) => {
+  const user = await db.users.findOne({ _id: req.user.id });
+  if (!user) return res.status(404).json({ error: 'Not found' });
+  const { password, ...safe } = user;
+  res.json(safe);
+};
+
+
 
