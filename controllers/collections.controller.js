@@ -22,3 +22,18 @@ exports.create = async (req, res) => {
   res.status(201).json(col);
 };
 
+
+
+exports.update = async (req, res) => {
+  const col = await db.collections.findOne({ _id: req.params.id, userId: req.user.id });
+  if (!col) return res.status(404).json({ error: 'Not found' });
+  const { name, description, color, icon } = req.body;
+  const updates = {};
+  if (name) updates.name = name;
+  if (description !== undefined) updates.description = description;
+  if (color) updates.color = color;
+  if (icon) updates.icon = icon;
+  await db.collections.update({ _id: req.params.id }, { $set: updates });
+  res.json({ ...col, ...updates });
+};
+
