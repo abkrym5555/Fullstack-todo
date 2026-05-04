@@ -77,3 +77,12 @@ exports.remove = async (req, res) => {
   if (!removed) return res.status(404).json({ error: 'Not found' });
   res.json({ message: 'Deleted' });
 };
+
+
+exports.toggle = async (req, res) => {
+  const todo = await db.todos.findOne({ _id: req.params.id, userId: req.user.id });
+  if (!todo) return res.status(404).json({ error: 'Not found' });
+  const newStatus = todo.status === 'completed' ? 'pending' : 'completed';
+  await db.todos.update({ _id: req.params.id }, { $set: { status: newStatus, updatedAt: new Date().toISOString() } });
+  res.json({ status: newStatus });
+};
