@@ -10,3 +10,15 @@ exports.getAll = async (req, res) => {
   }));
   res.json(enriched);
 };
+
+exports.create = async (req, res) => {
+  const { name, description, color = '#6366f1', icon = '📋' } = req.body;
+  if (!name) return res.status(400).json({ error: 'Name required' });
+  const col = await db.collections.insert({
+    _id: uuid(), userId: req.user.id,
+    name, description, color, icon,
+    createdAt: new Date().toISOString()
+  });
+  res.status(201).json(col);
+};
+
