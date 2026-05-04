@@ -86,3 +86,20 @@ exports.toggle = async (req, res) => {
   await db.todos.update({ _id: req.params.id }, { $set: { status: newStatus, updatedAt: new Date().toISOString() } });
   res.json({ status: newStatus });
 };
+
+
+exports.getStats = async (req, res) => {
+  const todos = await db.todos.find({ userId: req.user.id });
+  const stats = {
+    total: todos.length,
+    completed: todos.filter(t => t.status === 'completed').length,
+    pending: todos.filter(t => t.status === 'pending').length,
+    overdue: todos.filter(t => t.dueDate && new Date(t.dueDate) < new Date() && t.status !== 'completed').length,
+    byPriority: {
+      high: todos.filter(t => t.priority === 'high').length,
+      medium: todos.filter(t => t.priority === 'medium').length,
+      low: todos.filter(t => t.priority === 'low').length,
+    }
+  };
+  res.json(stats);
+};
