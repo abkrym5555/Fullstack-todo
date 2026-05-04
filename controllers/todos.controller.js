@@ -28,3 +28,11 @@ exports.getAll = async (req, res) => {
     res.json(todos);
   } catch (e) { res.status(500).json({ error: e.message }); }
 };
+
+
+exports.getById = async (req, res) => {
+  const todo = await db.todos.findOne({ _id: req.params.id, userId: req.user.id });
+  if (!todo) return res.status(404).json({ error: 'Not found' });
+  res.json(todo);
+};
+
