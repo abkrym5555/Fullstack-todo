@@ -70,3 +70,10 @@ exports.update = async (req, res) => {
     res.json({ ...todo, ...updates });
   } catch (e) { res.status(500).json({ error: e.message }); }
 };
+
+
+exports.remove = async (req, res) => {
+  const removed = await db.todos.remove({ _id: req.params.id, userId: req.user.id });
+  if (!removed) return res.status(404).json({ error: 'Not found' });
+  res.json({ message: 'Deleted' });
+};
