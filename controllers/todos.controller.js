@@ -36,3 +36,22 @@ exports.getById = async (req, res) => {
   res.json(todo);
 };
 
+exports.create = async (req, res) => {
+  try {
+    const { title, description, priority = 'medium', dueDate, tags = [], collectionId } = req.body;
+    if (!title) return res.status(400).json({ error: 'Title required' });
+
+    const todo = await db.todos.insert({
+      _id: uuid(),
+      userId: req.user.id,
+      title, description, priority,
+      dueDate: dueDate || null,
+      tags,
+      collectionId: collectionId || null,
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    });
+    res.status(201).json(todo);
+  } catch (e) { res.status(500).json({ error: e.message }); }
+};
