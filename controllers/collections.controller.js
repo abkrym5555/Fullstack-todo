@@ -37,3 +37,12 @@ exports.update = async (req, res) => {
   res.json({ ...col, ...updates });
 };
 
+
+exports.remove = async (req, res) => {
+  await db.collections.remove({ _id: req.params.id, userId: req.user.id });
+  // Unlink todos
+  await db.todos.update({ collectionId: req.params.id }, { $set: { collectionId: null } }, { multi: true });
+  res.json({ message: 'Deleted' });
+};
+
+
