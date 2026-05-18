@@ -23,3 +23,27 @@ exports.getAll = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch feedback" });
   }
 };
+
+
+exports.create = async (req, res) => {
+  try {
+    const { rating, comment } = req.body;
+
+    if (!rating  rating < 1 
+ rating > 5) {
+      return res.status(400).json({ error: "Rating must be between 1 and 5" });
+    }
+
+    const newFeedback = await db.feedbacks.insert({
+      userId: req.user.id,
+      rating: Number(rating),
+      comment: comment || "",
+      createdAt: new Date()
+    });
+
+    res.status(201).json(newFeedback);
+  } catch (error) {
+    console.error("Error creating feedback:", error);
+    res.status(500).json({ error: "Failed to create feedback" });
+  }
+};
