@@ -104,11 +104,11 @@ function Feedback() {
                     />
                   ) : (
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-accent2 flex items-center justify-center font-bold text-white">
-                      {`f.user?.name?.[0]?.toUpperCase()  'U'`}
+                      {f.user?.name?.[0]?.toUpperCase() || 'U'}
                     </div>
                   )}
                   <div>
-                    <div className="font-medium text-sm">{`f.user?.name  'Unknown User'`}</div>
+                    <div className="font-medium text-sm">{f.user?.name || 'Unknown User'}</div>
                     <div className="text-xs text-muted">
                       {new Date(f.createdAt).toLocaleDateString()}
                     </div>

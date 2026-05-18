@@ -2,4 +2,3 @@
 {"_id":"77efc54b-c3c9-4465-8f61-0b92c09aed21","name":"mhmddddd","email":"mmmm@mail.com","password":"$2b$12$UkxLApZDXe3xgMiZz.hpyOZVZdDUy4D5BwChgr6imZEIBgLZvWcWu","role":"user","createdAt":"2026-05-07T22:14:58.560Z","updatedAt":"2026-05-07T22:16:55.662Z","profilePicture":"https://media.elbalad.news/2024/10/large/749/5/30.jpg"}
 {"_id":"9c95743e-8634-4c6e-9365-bec8255f637d","name":"mhmd","email":"xxx@xxx.com","password":"$2b$12$aJR543jIY0GdkZRHIxh4teedWz1xxCPx6GAR0sJjyieW/aBCDG3Rq","role":"user","createdAt":"2026-05-04T20:30:51.864Z","updatedAt":"2026-05-04T20:41:23.271Z"}
 {"$$indexCreated":{"fieldName":"email","unique":true,"sparse":false}}
-{"$$indexCreated":{"fieldName":"email","unique":true}}
