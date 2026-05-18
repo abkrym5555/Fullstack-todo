@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -23,10 +20,10 @@ export default {
         low: "#34d399",
       },
       fontFamily: {
-        syne: ['Syne', 'sans-serif'],
-        sans: ['DM Sans', 'sans-serif'],
-      }
+        syne: ["Syne", "sans-serif"],
+        sans: ["DM Sans", "sans-serif"],
+      },
     },
   },
   plugins: [],
-}
+};

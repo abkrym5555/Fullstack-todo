@@ -1,54 +1,59 @@
-const db = require('../models/db');
-const { v4: uuid } = require('uuid');
+const collectionsService = require("../services/collections.service");
 
 exports.getAll = async (req, res) => {
-  const cols = await db.collections.find({ userId: req.user.id });
-  // Attach todo counts
-  const enriched = await Promise.all(cols.map(async col => {
-    const count = (await db.todos.find({ collectionId: col._id })).length;
-    return { ...col, todoCount: count };
-  }));
-  res.json(enriched);
+  try {
+    const enriched = await collectionsService.getAllCollections(req.user.id);
+    res.json(enriched);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 };
 
 exports.create = async (req, res) => {
-  const { name, description, color = '#6366f1', icon = '📋' } = req.body;
-  if (!name) return res.status(400).json({ error: 'Name required' });
-  const col = await db.collections.insert({
-    _id: uuid(), userId: req.user.id,
-    name, description, color, icon,
-    createdAt: new Date().toISOString()
-  });
-  res.status(201).json(col);
+  try {
+    const col = await collectionsService.createCollection(
+      req.user.id,
+      req.body,
+    );
+    res.status(201).json(col);
+  } catch (e) {
+    res.status(e.status || 500).json({ error: e.message });
+  }
 };
-
-
 
 exports.update = async (req, res) => {
-  const col = await db.collections.findOne({ _id: req.params.id, userId: req.user.id });
-  if (!col) return res.status(404).json({ error: 'Not found' });
-  const { name, description, color, icon } = req.body;
-  const updates = {};
-  if (name) updates.name = name;
-  if (description !== undefined) updates.description = description;
-  if (color) updates.color = color;
-  if (icon) updates.icon = icon;
-  await db.collections.update({ _id: req.params.id }, { $set: updates });
-  res.json({ ...col, ...updates });
+  try {
+    const result = await collectionsService.updateCollection(
+      req.user.id,
+      req.params.id,
+      req.body,
+    );
+    res.json(result);
+  } catch (e) {
+    res.status(e.status || 500).json({ error: e.message });
+  }
 };
 
-
 exports.remove = async (req, res) => {
-  await db.collections.remove({ _id: req.params.id, userId: req.user.id });
-  // Unlink todos
-  await db.todos.update({ collectionId: req.params.id }, { $set: { collectionId: null } }, { multi: true });
-  res.json({ message: 'Deleted' });
+  try {
+    const result = await collectionsService.removeCollection(
+      req.user.id,
+      req.params.id,
+    );
+    res.json(result);
+  } catch (e) {
+    res.status(e.status || 500).json({ error: e.message });
+  }
 };
 
 exports.getTodos = async (req, res) => {
-  const col = await db.collections.findOne({ _id: req.params.id, userId: req.user.id });
-  if (!col) return res.status(404).json({ error: 'Not found' });
-  const todos = await db.todos.find({ collectionId: req.params.id, userId: req.user.id });
-  res.json({ collection: col, todos });
+  try {
+    const result = await collectionsService.getCollectionTodos(
+      req.user.id,
+      req.params.id,
+    );
+    res.json(result);
+  } catch (e) {
+    res.status(e.status || 500).json({ error: e.message });
+  }
 };
-

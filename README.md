@@ -17,32 +17,33 @@ A robust, modern, and beautiful fullstack task management application. This proj
 ## 📖 Usage Guidelines
 
 1. **Sign Up**: Start by creating a new account on the `/register` page.
-![image 1](./frontend/screenshots/reg_sign.png)
+   ![image 1](./frontend/screenshots/reg_sign.png)
 2. **Create Collections**: Before adding complex tasks, create a collection (e.g., "Development") to organize your workflow.
-![image 2](./frontend/screenshots/coll.png)
+   ![image 2](./frontend/screenshots/coll.png)
 3. **Add Tasks**: Click the "New Todo" button to create tasks. You can assign them priorities, due dates, and link them to your collections.
-![image 3](./frontend/screenshots/addtask.png)
+   ![image 3](./frontend/screenshots/addtask.png)
 4. **Submit Feedback**: Navigate to the Feedback section in the sidebar to let other users know what you think about the platform!
-![image 4](./frontend/screenshots/feedback.png)
+   ![image 4](./frontend/screenshots/feedback.png)
 5. **Edit profile**: Upload a photo for your profile and edit your information
-![image 4](./frontend/screenshots/edit.png)
+   ![image 4](./frontend/screenshots/edit.png)
 
 ## 🛠️ Tech Stack
 
 **Frontend:**
+
 - React (Vite)
 - Tailwind CSS (Styling)
 - Formik & Yup (Form handling and validation)
 - React Router (Navigation)
 
 **Backend:**
+
 - Node.js & Express
 - NeDB (Lightweight local database, similar to MongoDB)
 - JSON Web Tokens (JWT)
 - bcrypt (Password Hashing)
 
 ---
-
 
 ## 📂 Project Structure
 
@@ -66,11 +67,10 @@ Fullstack-todo/
 
 ---
 
-##  For Developers
+## For Developers
 
 - **Database**: This app uses `NeDB`, which stores data locally in the `/data` folder using `.db` files. You don't need to configure MongoDB or external databases. If you ever want to clear the database, simply delete the `.db` files inside the `data/` folder and restart the server.
 - **API Proxy**: The frontend uses Vite's proxy to forward `/api` requests to `http://localhost:3000` to prevent CORS issues during development. Ensure the backend is running on port 3000.
-
 
 ## 🚀 Getting Started
 
@@ -99,16 +99,20 @@ To run this application locally, you will need to start both the backend server 
 
 **Start the Backend Server:**
 Open a terminal in the root directory (`Fullstack-todo/`) and run:
+
 ```bash
 node index.js
 ```
-*The API will start running on `http://localhost:3000`.*
+
+_The API will start running on `http://localhost:3000`._
 
 **Start the Frontend Server:**
 Open a second terminal, navigate to the `frontend/` directory, and run:
+
 ```bash
 npm run dev
 ```
-*The frontend will start running on `http://localhost:5173`.*
+
+_The frontend will start running on `http://localhost:5173`._
 
 ---
