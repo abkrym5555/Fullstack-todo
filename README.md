@@ -35,6 +35,7 @@ A robust, modern, and beautiful fullstack task management application. This proj
 - Tailwind CSS (Styling)
 - Formik & Yup (Form handling and validation)
 - React Router (Navigation)
+- Vitest (Testing)
 
 **Backend:**
 
@@ -42,6 +43,8 @@ A robust, modern, and beautiful fullstack task management application. This proj
 - NeDB (Lightweight local database, similar to MongoDB)
 - JSON Web Tokens (JWT)
 - bcrypt (Password Hashing)
+- Jest & Supertest (Testing)
+- ESLint & Prettier (Linting and Formatting)
 
 ---
 
@@ -50,11 +53,13 @@ A robust, modern, and beautiful fullstack task management application. This proj
 ```text
 Fullstack-todo/
 ├── index.js                  # Main Express Server entry point
-├── controllers/              # Backend route logic (Todos, Users, Collections, Feedback)
+├── controllers/              # HTTP Request handlers
+├── services/                 # Business logic and database interactions
 ├── routes/                   # API endpoint definitions
 ├── models/                   # NeDB database configurations (db.js)
 ├── middleware/               # Auth middleware
 ├── data/                     # Local NeDB data storage (.db files)
+├── tests/                    # Backend API tests (Jest)
 └── frontend/                 # React Frontend application
     ├── src/
     │   ├── components/       # Reusable UI components
@@ -62,15 +67,31 @@ Fullstack-todo/
     │   ├── layouts/          # Main application layout & Sidebar
     │   ├── pages/            # Page components (Todos, Login, Feedback, etc.)
     │   └── services/         # API abstraction
+    ├── tests/                # Frontend tests (Vitest)
     └── vite.config.js        # Vite configuration (includes API proxy)
 ```
 
 ---
 
-## For Developers
+## 🧑‍💻 For Developers
 
+- **Architecture**: The backend follows a controller-service pattern. Route handlers live in `controllers/` and call functions in `services/` to perform database operations.
 - **Database**: This app uses `NeDB`, which stores data locally in the `/data` folder using `.db` files. You don't need to configure MongoDB or external databases. If you ever want to clear the database, simply delete the `.db` files inside the `data/` folder and restart the server.
 - **API Proxy**: The frontend uses Vite's proxy to forward `/api` requests to `http://localhost:3000` to prevent CORS issues during development. Ensure the backend is running on port 3000.
+
+### 📜 Available Scripts
+
+From the **root directory**, you can run:
+- `npm run dev`: Starts the backend server with `nodemon` (auto-restarts on file changes).
+- `npm run test`: Runs the Jest testing suite for the backend.
+- `npm run lint`: Analyzes the backend code using ESLint.
+- `npm run format`: Formats code using Prettier.
+- `npm run build`: Installs frontend dependencies and builds the React frontend for production!
+
+From the **`frontend/` directory**, you can run:
+- `npm run dev`: Starts the Vite development server.
+- `npm run test`: Runs the Vitest testing suite.
+- `npm run lint` / `npm run format`: Lints and formats the React codebase.
 
 ## 🚀 Getting Started
 
