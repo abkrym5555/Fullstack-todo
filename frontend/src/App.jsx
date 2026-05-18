@@ -6,7 +6,7 @@ import Layout from "./layouts/Layout";
 import Todos from "./pages/Todos";
 import Collections from "./pages/Collections";
 import Profile from "./pages/Profile";
-
+import Feedback from "./pages/Feedback";
 function AppRoutes() {
   const { token } = useAuth();
 
@@ -27,7 +27,9 @@ function AppRoutes() {
             <Route index element={<Todos />} />
             <Route path="collections" element={<Collections />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="feedback" element={<Feedback />} />
           </Route>
+          
         ) : (
           <Route path="*" element={<Navigate to="/login" />} />
         )}
