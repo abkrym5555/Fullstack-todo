@@ -23,6 +23,26 @@ function Feedback() {
     formik.resetForm();
     setIsModalOpen(true);
   };
+  const formik = useFormik({
+    initialValues: { rating: '5', comment: '' },
+    validationSchema: Yup.object({
+      rating: Yup.number().required('Required').min(1).max(5),
+      comment: Yup.string().required('Required')
+    }),
+    onSubmit: async (values) => {
+      try {
+        await api('POST', '/feedback', {
+          rating: Number(values.rating),
+          comment: values.comment
+        });
+        showToast('Feedback submitted ✓');
+        setIsModalOpen(false);
+        loadData();
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    }
+  });
   return (
     <div>
       {/* Header section */}
@@ -80,6 +100,64 @@ function Feedback() {
           </div>
         ))}
       </div>
+{/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-[#00000088] backdrop-blur-sm z-[200] flex items-center justify-center p-4">
+          <div className="bg-surface border border-border rounded-[20px] p-8 w-full max-w-[500px]">
+            <div className="font-syne text-xl font-bold mb-6 flex items-center justify-between">
+              <span>Submit Feedback</span>
+              <button className="px-2 py-1 bg-surface2 border border-border rounded-lg text-muted hover:text-text" onClick={() => setIsModalOpen(false)}>✕</button>
+            </div>
+            
+            <form onSubmit={formik.handleSubmit}>
+              <div className="form-group mb-4 text-center">
+                <label className="mb-2 block">Your Rating</label>
+                <div className="flex justify-center gap-2 flex-row-reverse">
+                  {/* Star rating selection */}
+                  {[5, 4, 3, 2, 1].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      className={`text-3xl transition-colors ${Number(formik.values.rating) >= star ? 'text-accent' : 'text-muted opacity-30'} hover:text-accent`}
+                      onClick={() => formik.setFieldValue('rating', star)}
+                      onMouseEnter={(e) => {
+                         const buttons = e.currentTarget.parentNode.children;
+                         Array.from(buttons).forEach((b, i) => {
+                           if (i >= 5 - star) b.classList.add('text-accent');
+                         });
+                      }}
+                      onMouseLeave={(e) => {
+                         const buttons = e.currentTarget.parentNode.children;
+                         Array.from(buttons).forEach((b, i) => {
+                           if (Number(formik.values.rating) < 5 - i) b.classList.remove('text-accent');
+                         });
+                      }}
+                    >
+                      ★
+                    </button>
+                  ))}
+                </div>
+                {formik.touched.rating && formik.errors.rating && <div className="text-danger text-xs mt-1">{formik.errors.rating}</div>}
+              </div>
+              
+              <div className="form-group mb-6">
+                <label>Comment *</label>
+                <textarea 
+                  {...formik.getFieldProps('comment')} 
+                  placeholder="Tell us what you think..."
+                  className="min-h-[120px]"
+                ></textarea>
+                {formik.touched.comment && formik.errors.comment && <div className="text-danger text-xs mt-1">{formik.errors.comment}</div>}
+              </div>
+              
+              <div className="flex gap-3">
+                <button type="button" className="btn btn-ghost flex-1" onClick={() => setIsModalOpen(false)}>Cancel</button>
+                <button type="submit" disabled={formik.isSubmitting} className="btn flex-1">{formik.isSubmitting ? 'Submitting...' : 'Submit'}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
