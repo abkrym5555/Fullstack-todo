@@ -48,8 +48,12 @@ export default function Layout() {
             </NavLink>
             <NavLink to="/collections" className={navItemClass}>
               <span className="text-lg w-5 text-center">📁</span> Collections
+            </NavLink> 
+            <NavLink to="/feedback" className={navItemClass}>
+              <span className="text-lg w-5 text-center">💬</span> Feedback
             </NavLink>
           </div>
+
 
           <div className="mb-6">
             <div className="text-[0.7rem] font-semibold tracking-widest text-muted uppercase px-3 py-1 mb-2">My Collections</div>
