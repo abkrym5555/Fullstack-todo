@@ -30,7 +30,7 @@ app.get("/api", (req, res) => {
 app.use("/api/users", require("./routes/users"));
 app.use("/api/todos", require("./routes/todos"));
 app.use("/api/collections", require("./routes/collections"));
-
+app.use("/api/feedback", require("./routes/feedback"));
 // Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
