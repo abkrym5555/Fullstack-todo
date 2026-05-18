@@ -7,6 +7,18 @@ function Feedback() {
     const [feedbacks, setFeedbacks] = useState([]);
   const { showToast } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const loadData = async () => {
+    try {
+      const data = await api('GET', '/feedback');
+      setFeedbacks(data || []);
+    } catch (e) {
+      showToast(e.message, 'error');
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
   const openModal = () => {
     formik.resetForm();
     setIsModalOpen(true);
@@ -22,6 +34,18 @@ function Feedback() {
         <button onClick={openModal} className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-br from-accent to-[#5b4fd4] rounded-xl text-white font-sans text-sm cursor-pointer hover:opacity-90 whitespace-nowrap">
           ＋ Add Feedback
         </button>
+      </div>
+      <div className="bg-surface border border-border rounded-xl p-5 mb-8 flex items-center justify-between">
+        <div>
+          <div className="font-syne text-3xl font-extrabold">{feedbacks.length}</div>
+          <div className="text-muted text-xs">Total Reviews</div>
+        </div>
+        <div className="text-right">
+          <div className="font-syne text-3xl font-extrabold text-accent">
+            {feedbacks.length > 0 ? (feedbacks.reduce((acc, f) => acc + f.rating, 0) / feedbacks.length).toFixed(1) : '0.0'}
+          </div>
+          <div className="text-muted text-xs">Average Rating</div>
+        </div>
       </div>
     </div>
   )
