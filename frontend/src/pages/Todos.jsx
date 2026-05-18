@@ -138,16 +138,6 @@ export default function Todos() {
           <div className="text-muted text-xs">Completed</div>
           <span className="absolute right-4 top-1/2 -translate-y-1/2 text-3xl opacity-15">✅</span>
         </div>
-        <div className="bg-surface border border-border rounded-xl p-5 relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-warn">
-          <div className="font-syne text-3xl font-extrabold mb-1">{stats.pending}</div>
-          <div className="text-muted text-xs">Pending</div>
-          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-3xl opacity-15">⏳</span>
-        </div>
-        <div className="bg-surface border border-border rounded-xl p-5 relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:bg-danger">
-          <div className="font-syne text-3xl font-extrabold mb-1">{stats.overdue}</div>
-          <div className="text-muted text-xs">Overdue</div>
-          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-3xl opacity-15">🚨</span>
-        </div>
       </div>
 
       {/* Filters */}
@@ -163,7 +153,6 @@ export default function Todos() {
           />
         </div>
         <button className={`px-3 py-1.5 rounded-full border text-xs transition-colors ${filter === 'all' ? 'bg-accent border-accent text-white' : 'border-border text-muted hover:bg-surface hover:text-text'}`} onClick={() => setFilter('all')}>All</button>
-        <button className={`px-3 py-1.5 rounded-full border text-xs transition-colors ${filter === 'pending' ? 'bg-accent border-accent text-white' : 'border-border text-muted hover:bg-surface hover:text-text'}`} onClick={() => setFilter('pending')}>Pending</button>
         <button className={`px-3 py-1.5 rounded-full border text-xs transition-colors ${filter === 'completed' ? 'bg-accent border-accent text-white' : 'border-border text-muted hover:bg-surface hover:text-text'}`} onClick={() => setFilter('completed')}>Completed</button>
         
         <select className="px-3 py-1.5 bg-surface border border-border rounded-xl text-sm outline-none cursor-pointer text-text" value={priority} onChange={(e) => setPriority(e.target.value)}>

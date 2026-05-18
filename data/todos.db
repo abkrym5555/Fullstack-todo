@@ -1,4 +1,2 @@
+{"_id":"ea311045-abaf-4733-9a83-81f5329bc59c","userId":"77efc54b-c3c9-4465-8f61-0b92c09aed21","title":"yrtyrtytr","description":"tyrtyty","priority":"low","dueDate":"2026-05-19","tags":["rtrrrrtyrtytryrtyrty"],"collectionId":null,"status":"pending","createdAt":"2026-05-07T22:17:49.082Z","updatedAt":"2026-05-07T22:17:54.646Z"}
 {"$$indexCreated":{"fieldName":"userId","unique":false,"sparse":false}}
-{"_id":"99f8985f-1296-49f5-9f57-038a3fe89961","userId":"9c95743e-8634-4c6e-9365-bec8255f637d","title":"t1","description":"Milk, eggs, bread","priority":"high","dueDate":"2026-05-10T12:00:00.000Z","tags":["shopping","urgent"],"collectionId":null,"status":"pending","createdAt":"2026-05-04T20:33:30.584Z","updatedAt":"2026-05-04T20:33:30.584Z"}
-{"_id":"99f8985f-1296-49f5-9f57-038a3fe89961","userId":"9c95743e-8634-4c6e-9365-bec8255f637d","title":"edit","description":"Milk, eggs, bread","priority":"high","dueDate":"2026-05-10T12:00:00.000Z","tags":["shopping","urgent"],"collectionId":null,"status":"pending","createdAt":"2026-05-04T20:33:30.584Z","updatedAt":"2026-05-04T20:35:34.223Z"}
-{"$$deleted":true,"_id":"99f8985f-1296-49f5-9f57-038a3fe89961"}

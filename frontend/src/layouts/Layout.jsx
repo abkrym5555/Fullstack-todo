@@ -37,7 +37,7 @@ export default function Layout() {
       {/* Sidebar */}
       <aside className={`fixed md:static left-0 top-0 w-[260px] h-screen bg-surface border-r border-border flex flex-col z-[100] transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
         <div className="p-6 border-b border-border">
-          <div className="font-syne text-2xl font-extrabold bg-gradient-to-br from-accent to-accent2 bg-clip-text text-transparent">Taskflow</div>
+          <div className="font-syne text-2xl font-extrabold bg-gradient-to-br from-accent to-accent2 bg-clip-text text-transparent">TASKER</div>
         </div>
         
         <nav className="flex-1 p-4 overflow-y-auto">
