@@ -1,2 +1,5 @@
 {"_id":"ea311045-abaf-4733-9a83-81f5329bc59c","userId":"77efc54b-c3c9-4465-8f61-0b92c09aed21","title":"yrtyrtytr","description":"tyrtyty","priority":"low","dueDate":"2026-05-19","tags":["rtrrrrtyrtytryrtyrty"],"collectionId":null,"status":"pending","createdAt":"2026-05-07T22:17:49.082Z","updatedAt":"2026-05-07T22:17:54.646Z"}
 {"$$indexCreated":{"fieldName":"userId","unique":false,"sparse":false}}
+{"_id":"5e000218-71fb-4cb7-aa97-ca9ad466d729","userId":"77efc54b-c3c9-4465-8f61-0b92c09aed21","title":"fdsdf","description":"dsfsdfff","priority":"medium","dueDate":"2026-05-30","tags":["sdfsdfdsfsf"],"collectionId":"c58d2f55-9ae2-43e1-a11a-eb53c4b5551a","status":"pending","createdAt":"2026-05-18T16:43:05.407Z","updatedAt":"2026-05-18T16:43:05.407Z"}
+{"$$deleted":true,"_id":"ea311045-abaf-4733-9a83-81f5329bc59c"}
+{"$$deleted":true,"_id":"5e000218-71fb-4cb7-aa97-ca9ad466d729"}
