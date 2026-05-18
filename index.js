@@ -37,9 +37,11 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Internal server error" });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Todo server running at http://localhost:${PORT}`);
-  console.log(`📡 API available at http://localhost:${PORT}/api`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Todo server running at http://localhost:${PORT}`);
+    console.log(`📡 API available at http://localhost:${PORT}/api`);
+  });
+}
 
 module.exports = app;

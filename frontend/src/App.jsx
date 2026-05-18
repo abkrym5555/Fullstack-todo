@@ -29,7 +29,6 @@ function AppRoutes() {
             <Route path="profile" element={<Profile />} />
             <Route path="feedback" element={<Feedback />} />
           </Route>
-          
         ) : (
           <Route path="*" element={<Navigate to="/login" />} />
         )}

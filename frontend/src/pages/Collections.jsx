@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import { api } from '../services/api';
-import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { useState, useEffect } from "react";
+import { api } from "../services/api";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 export default function Collections() {
   const [collections, setCollections] = useState([]);
@@ -13,10 +13,10 @@ export default function Collections() {
 
   const loadCollections = async () => {
     try {
-      const data = await api('GET', '/collections');
+      const data = await api("GET", "/collections");
       setCollections(data || []);
     } catch (e) {
-      showToast(e.message, 'error');
+      showToast(e.message, "error");
     }
   };
 
@@ -26,32 +26,35 @@ export default function Collections() {
 
   const deleteCollection = async (id, e) => {
     e.stopPropagation();
-    if (!window.confirm('Delete collection? Todos will be unlinked.')) return;
+    if (!window.confirm("Delete collection? Todos will be unlinked.")) return;
     try {
-      await api('DELETE', `/collections/${id}`);
-      showToast('Deleted ✓');
+      await api("DELETE", `/collections/${id}`);
+      showToast("Deleted ✓");
       loadCollections();
     } catch (e) {
-      showToast(e.message, 'error');
+      showToast(e.message, "error");
     }
   };
 
   const formik = useFormik({
-    initialValues: { name: '', description: '', icon: '📋', color: '#7c6af7' },
+    initialValues: { name: "", description: "", icon: "📋", color: "#7c6af7" },
     validationSchema: Yup.object({
-      name: Yup.string().required('Required'),
-      icon: Yup.string().max(2, 'Max 2 characters')
+      name: Yup.string().required("Required"),
+      icon: Yup.string().max(2, "Max 2 characters"),
     }),
     onSubmit: async (values) => {
       try {
-        await api('POST', '/collections', { ...values, icon: values.icon || '📋' });
-        showToast('Collection created ✓');
+        await api("POST", "/collections", {
+          ...values,
+          icon: values.icon || "📋",
+        });
+        showToast("Collection created ✓");
         setIsModalOpen(false);
         loadCollections();
       } catch (e) {
-        showToast(e.message, 'error');
+        showToast(e.message, "error");
       }
-    }
+    },
   });
 
   const openModal = () => {
@@ -62,22 +65,27 @@ export default function Collections() {
   return (
     <div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-4">
-        {collections.map(c => (
-          <div 
-            key={c._id} 
+        {collections.map((c) => (
+          <div
+            key={c._id}
             className="group bg-surface border border-border rounded-[14px] p-5 cursor-pointer transition-all relative hover:-translate-y-0.5 hover:shadow-[0_8px_32px_#0008]"
             onClick={() => navigate(`/?collection=${c._id}`)}
           >
             <div className="absolute top-3 right-3 flex gap-1.5 opacity-0 transition-opacity group-hover:opacity-100">
-              <button className="tiny-btn del" onClick={(e) => deleteCollection(c._id, e)}>🗑</button>
+              <button
+                className="tiny-btn del"
+                onClick={(e) => deleteCollection(c._id, e)}
+              >
+                🗑
+              </button>
             </div>
             <div className="text-3xl mb-3">{c.icon}</div>
             <div className="font-syne font-bold mb-1">{c.name}</div>
             <div className="text-xs text-muted">{c.todoCount || 0} tasks</div>
           </div>
         ))}
-        
-        <div 
+
+        <div
           className="bg-transparent border-2 border-dashed border-border flex flex-col items-center justify-center gap-2 text-muted text-sm cursor-pointer transition-colors min-h-[130px] rounded-[14px] hover:border-accent hover:text-accent"
           onClick={openModal}
         >
@@ -91,36 +99,78 @@ export default function Collections() {
           <div className="bg-surface border border-border rounded-[20px] p-8 w-full max-w-[500px]">
             <div className="font-syne text-xl font-bold mb-6 flex items-center justify-between">
               <span>New Collection</span>
-              <button className="px-2 py-1 bg-surface2 border border-border rounded-lg text-muted hover:text-text" onClick={() => setIsModalOpen(false)}>✕</button>
+              <button
+                className="px-2 py-1 bg-surface2 border border-border rounded-lg text-muted hover:text-text"
+                onClick={() => setIsModalOpen(false)}
+              >
+                ✕
+              </button>
             </div>
-            
+
             <form onSubmit={formik.handleSubmit}>
               <div className="form-group mb-4">
                 <label>Name *</label>
-                <input type="text" {...formik.getFieldProps('name')} placeholder="Project name" />
-                {formik.touched.name && formik.errors.name && <div className="text-danger text-xs mt-1">{formik.errors.name}</div>}
+                <input
+                  type="text"
+                  {...formik.getFieldProps("name")}
+                  placeholder="Project name"
+                />
+                {formik.touched.name && formik.errors.name && (
+                  <div className="text-danger text-xs mt-1">
+                    {formik.errors.name}
+                  </div>
+                )}
               </div>
-              
+
               <div className="form-group mb-4">
                 <label>Description</label>
-                <input type="text" {...formik.getFieldProps('description')} placeholder="What is this collection for?" />
+                <input
+                  type="text"
+                  {...formik.getFieldProps("description")}
+                  placeholder="What is this collection for?"
+                />
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="form-group">
                   <label>Icon</label>
-                  <input type="text" {...formik.getFieldProps('icon')} placeholder="📋" maxLength="2" />
-                  {formik.touched.icon && formik.errors.icon && <div className="text-danger text-xs mt-1">{formik.errors.icon}</div>}
+                  <input
+                    type="text"
+                    {...formik.getFieldProps("icon")}
+                    placeholder="📋"
+                    maxLength="2"
+                  />
+                  {formik.touched.icon && formik.errors.icon && (
+                    <div className="text-danger text-xs mt-1">
+                      {formik.errors.icon}
+                    </div>
+                  )}
                 </div>
                 <div className="form-group">
                   <label>Color</label>
-                  <input type="color" {...formik.getFieldProps('color')} className="!p-1 h-[46px] cursor-pointer" />
+                  <input
+                    type="color"
+                    {...formik.getFieldProps("color")}
+                    className="!p-1 h-[46px] cursor-pointer"
+                  />
                 </div>
               </div>
 
               <div className="flex gap-3">
-                <button type="button" className="btn btn-ghost flex-1" onClick={() => setIsModalOpen(false)}>Cancel</button>
-                <button type="submit" disabled={formik.isSubmitting} className="btn flex-1">{formik.isSubmitting ? 'Creating...' : 'Create Collection'}</button>
+                <button
+                  type="button"
+                  className="btn btn-ghost flex-1"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={formik.isSubmitting}
+                  className="btn flex-1"
+                >
+                  {formik.isSubmitting ? "Creating..." : "Create Collection"}
+                </button>
               </div>
             </form>
           </div>
