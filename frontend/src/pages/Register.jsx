@@ -12,11 +12,14 @@ export default function Register() {
   const formik = useFormik({
     initialValues: { name: "", email: "", password: "" },
     validationSchema: Yup.object({
-      name: Yup.string().required("Required"),
-      email: Yup.string().email("Invalid email address").required("Required"),
+      name: Yup.string().required("Full Name is required"),
+      email: Yup.string()
+        .email("Invalid email address")
+        .matches(/\.com$/, "Email must end with .com")
+        .required("Email is required"),
       password: Yup.string()
         .min(6, "Must be at least 6 characters")
-        .required("Required"),
+        .required("Password is required"),
     }),
     onSubmit: async (values) => {
       try {

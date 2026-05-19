@@ -39,7 +39,7 @@ export default function Collections() {
   const formik = useFormik({
     initialValues: { name: "", description: "", icon: "📋", color: "#7c6af7" },
     validationSchema: Yup.object({
-      name: Yup.string().required("Required"),
+      name: Yup.string().required("Collection Name is required"),
       icon: Yup.string().max(2, "Max 2 characters"),
     }),
     onSubmit: async (values) => {
