@@ -26,8 +26,8 @@ function Feedback() {
   const formik = useFormik({
     initialValues: { rating: "5", comment: "" },
     validationSchema: Yup.object({
-      rating: Yup.number().required("Required").min(1).max(5),
-      comment: Yup.string().required("Required"),
+      rating: Yup.number().required("Rating is required").min(1).max(5),
+      comment: Yup.string().required("Comment is required"),
     }),
     onSubmit: async (values) => {
       try {

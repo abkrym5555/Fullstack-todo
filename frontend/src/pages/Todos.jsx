@@ -114,7 +114,7 @@ export default function Todos() {
       collectionId: "",
     },
     validationSchema: Yup.object({
-      title: Yup.string().required("Required"),
+      title: Yup.string().required("Title is required"),
     }),
     onSubmit: async (values) => {
       try {
